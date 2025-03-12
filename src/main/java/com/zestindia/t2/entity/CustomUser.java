@@ -37,7 +37,7 @@ public class CustomUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Arrays.stream(roles)
-                .map(ele -> new SimpleGrantedAuthority(ele.name()))
+                .map(ele -> new SimpleGrantedAuthority("ROLE_"+ele.name()))
                 .collect(Collectors.toList());
     }
 
