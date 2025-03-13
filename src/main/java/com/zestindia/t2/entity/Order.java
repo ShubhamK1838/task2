@@ -12,6 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
+@Table(name = "orders")
 public class Order {
     @Id
     private String id;
@@ -21,5 +22,6 @@ public class Order {
     @Temporal(TemporalType.DATE)
     @Column(name = "order_date")
     private Date orderDate;
+
 
 }
