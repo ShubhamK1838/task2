@@ -1,6 +1,7 @@
 package com.zestindia.t2.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.List;
@@ -16,10 +17,15 @@ public class Product {
 
     @Id
     private String id;
+    @NotNull
     private String name, description;
+    @NotNull
     private Float price;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Category> category;
+    private Integer quantity;
+    private String brand;
+
 
 }
+

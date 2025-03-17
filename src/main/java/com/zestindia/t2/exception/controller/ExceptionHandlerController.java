@@ -1,8 +1,11 @@
-package com.zestindia.t2.exception;
+package com.zestindia.t2.exception.controller;
 
 import com.zestindia.t2.exception.custom.CategoryNotFoundException;
+import com.zestindia.t2.exception.custom.OrderNotFoundException;
 import com.zestindia.t2.exception.custom.ProductNotFoundException;
+import com.zestindia.t2.exception.custom.UserAlreadyExistsException;
 import com.zestindia.t2.exception.response.ExceptionResponse;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.nio.file.AccessDeniedException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.Instant;
 import java.util.Date;
 
@@ -35,9 +39,15 @@ public class ExceptionHandlerController {
     public ResponseEntity<ExceptionResponse> categoryNotFoundExceptionHandler(CategoryNotFoundException categoryNotFoundException) {
         return builtNotFoundException(categoryNotFoundException);
     }
+
     @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<ExceptionResponse> categoryNotFoundExceptionHandler(ProductNotFoundException exception) {
         return builtNotFoundException(exception);
+    }
+
+    @ExceptionHandler(OrderNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> orderNotFoundExceptionHandler(OrderNotFoundException orderNotFoundException) {
+        return builtNotFoundException(orderNotFoundException);
     }
 
     private ResponseEntity<ExceptionResponse> builtNotFoundException(Exception exception) {
@@ -48,4 +58,30 @@ public class ExceptionHandlerController {
                         .timestamp(new Date())
                         .build());
     }
+
+    @ExceptionHandler({
+            ConstraintViolationException.class,
+            UserAlreadyExistsException.class,
+            SQLIntegrityConstraintViolationException.class
+    })
+    public ResponseEntity<ExceptionResponse> constraintViolationExceptionHandler(Exception exception) {
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
+                .body(ExceptionResponse.builder()
+                        .message(exception.getMessage())
+                        .statusCode(HttpStatus.NOT_ACCEPTABLE)
+                        .timestamp(new Date())
+                        .build());
+
+    }
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ExceptionResponse> genericExceptionHandler(Exception exception) {
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
+                .body(ExceptionResponse.builder()
+                        .message(exception.getMessage())
+                        .statusCode(HttpStatus.NOT_ACCEPTABLE)
+                        .timestamp(new Date())
+                        .build());
+
+    }
+
 }

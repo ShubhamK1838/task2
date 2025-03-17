@@ -1,17 +1,16 @@
 package com.zestindia.t2.security.jwt;
 
+import ch.qos.logback.core.net.server.Client;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.context.annotation.Configuration;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.crypto.SecretKey;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,15 +18,15 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class JwtTokenService   {
+@Slf4j
+public class JwtTokenService {
     private static final String SECRET = "ZHxTQgs/igL2PulV9fcpINQ5lS24hcsfzXyS2ugbpO9RiALHdGThOontzmO9RMaBUFgP0t/qDHZCTzbnSI1lpw==";
-    private static final long VALIDITY = TimeUnit.MINUTES.toMillis(60);
-
+    private static final long VALIDITY = TimeUnit.HOURS.toMillis(1);
 
     public String generateToken(UserDetails userDetails) {
-        Map<String, String> claims = new HashMap<>();
-        claims.put("start", LocalTime.now().plusMinutes(30).toString());
-        claims.put("end", LocalTime.now().plusMinutes(30).toString());
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("issuedAt", Date.from(Instant.now()));
+        claims.put("expiresAt", Date.from(Instant.now().plusMillis(VALIDITY)));
 
         return Jwts.builder()
                 .claims(claims)
@@ -43,20 +42,32 @@ public class JwtTokenService   {
     }
 
     public boolean isValid(String token) {
-        return getClaims(token).getExpiration().after(Date.from(Instant.now()));
+        try {
+            Claims claims=getClaims(token);
+            if(claims!=null)
+            return claims.getExpiration().after(Date.from(Instant.now()));
+
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        return false;
     }
 
     private Claims getClaims(String token) {
-        return Jwts.parser()
-                .verifyWith(getSecretKey())
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
+        try {
+            return Jwts.parser()
+                    .verifyWith(getSecretKey())
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        return null;
     }
 
     private SecretKey getSecretKey() {
         byte[] key = Base64.getDecoder().decode(SECRET);
         return Keys.hmacShaKeyFor(key);
     }
-
 }

@@ -1,5 +1,6 @@
 package com.zestindia.t2.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.zestindia.t2.enums.Roles;
 import jakarta.persistence.*;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -30,6 +32,9 @@ public class CustomUser implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Roles roles[];
+    @OneToMany(fetch = FetchType.EAGER , mappedBy = "user")
+    @JsonManagedReference
+    private List<Order> orders;
 
 
     @Override

@@ -1,5 +1,7 @@
 package com.zestindia.t2.security.jwt.filter;
 
+import com.zestindia.t2.exception.custom.JwtTokenExpirationException;
+import com.zestindia.t2.exception.response.ExceptionResponse;
 import com.zestindia.t2.security.jwt.JwtTokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -7,6 +9,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -35,7 +39,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         String token = header.substring(TOKEN_PREFIX.length());
-        if (jwtTokenService.isValid(token) && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (!jwtTokenService.isValid(token)) {
+            response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+            response.setContentType("application/json");
+            response.getWriter().write("JWT token has expired. Please login again.");
+            return;
+        }
+
+        if (SecurityContextHolder.getContext().getAuthentication() == null) {
             String username = jwtTokenService.extractUsername(token);
             if (username != null) {
                 var userDetails = userDetailsService.loadUserByUsername(username);

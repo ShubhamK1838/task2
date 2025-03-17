@@ -2,6 +2,7 @@ package com.zestindia.t2.service;
 
 
 import com.zestindia.t2.entity.Product;
+import com.zestindia.t2.exception.custom.ProductNotFoundException;
 import com.zestindia.t2.repository.ProductRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,6 +17,7 @@ import org.mockito.Mock;
 
 import static org.mockito.Mockito.*;
 
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.swing.text.html.Option;
@@ -40,9 +42,7 @@ public class ProductServiceTest {
     @Test
     void productSaveTest() {
 
-        doNothing().when(mockProduct).setId(any());
-        when(productService.saveProduct(mockProduct)).thenReturn(mock(Product.class));
-
+        when(repository.save(mockProduct)).thenReturn(mockProduct);
         assertNotNull(productService.saveProduct(mockProduct));
     }
 
@@ -51,14 +51,18 @@ public class ProductServiceTest {
     void productDeleteIfProductExistsTest() {
         when(repository.findById(anyString())).thenReturn(Optional.of(mockProduct));
         doNothing().when(repository).delete(any(Product.class));
+        productService.deleteProduct(anyString());
 
-        assertTrue(productService.deleteProduct("ID"));
+        verify(repository,times(1)).delete(any(Product.class));
+
     }
 
     @Test
     void productDeleteIfProductNOtExistsTest() {
         when(repository.findById(anyString())).thenReturn(Optional.ofNullable(null));
-        assertFalse(productService.deleteProduct("ID"));
+         assertThrows(ProductNotFoundException.class,()->{
+            productService.deleteProduct("ID");
+        });
     }
 
     @Test
@@ -84,26 +88,31 @@ public class ProductServiceTest {
 
         when(repository.findById("ID")).thenReturn(Optional.ofNullable(null));
 
-        assertFalse(productService.updateProduct(Product.builder().id("ID").build()));
+
+        assertThrows(ProductNotFoundException.class,()->{
+            productService.updateProduct(Product.builder().id("ID").build());
+        });
     }
+
+
     @Test
     void updateProductTest() {
         Product existingProduct = new Product();
         existingProduct.setId("123");
         existingProduct.setName("Old Name");
+
         Product updatedProduct = new Product();
         updatedProduct.setId("123");
         updatedProduct.setName("New Name");
 
-
-        when(repository.findById("123")).thenReturn(Optional.of(existingProduct));
-        when(repository.save(any(Product.class))).thenReturn(existingProduct);
-
-        Boolean result = productService.updateProduct(updatedProduct);
-
-        assertTrue(result);
+        when(repository.findById(anyString())).thenReturn(Optional.of(existingProduct));
+        when(repository.save(any(Product.class))).thenReturn(Mockito.mock(Product.class));
 
 
-    }
+        productService.updateProduct(updatedProduct);
+
+        assertEquals(existingProduct.getName(), updatedProduct.getName());
+ }
+
 
 }
