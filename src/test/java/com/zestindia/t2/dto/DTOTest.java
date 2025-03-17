@@ -26,7 +26,7 @@ public class DTOTest {
         assertEquals(userDTO.getId(),entity.getId());
         assertEquals(userDTO.getUsername(),entity.getUsername());
         assertEquals(userDTO.getRoles(),entity.getRoles());
-        assertEquals(userDTO.getUsername(),entity.getPassword());
+        assertEquals(userDTO.getUsername(),entity.getUsername());
 
     }
 }

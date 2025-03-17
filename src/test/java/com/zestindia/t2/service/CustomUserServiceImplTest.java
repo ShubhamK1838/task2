@@ -26,7 +26,7 @@ public class CustomUserServiceImplTest {
 
     @BeforeEach
     void initMockUser() {
-        MockitoAnnotations.openMocks(this); // Ensure mocks are opened
+        MockitoAnnotations.openMocks(this);
         mockUser = CustomUserDTO.builder()
                 .username("Tushar")
                 .id(UUID.randomUUID().toString())
@@ -38,13 +38,13 @@ public class CustomUserServiceImplTest {
     @Test
     void save_Update_Delete_Get_User_IfExists_Test() {
 
-        var dto=userService.saveUser(mockUser);
+        var dto = userService.saveUser(mockUser);
         dto.setRoles(new Roles[]{Roles.ADMIN});
 
         assertNotNull(dto);
         assertNotNull(userService.getUser(dto.getId()));
-        assertTrue(userService.update(dto.getId(),dto));
-        assertDoesNotThrow(()->{
+        assertTrue(userService.update(dto.getId(), dto));
+        assertDoesNotThrow(() -> {
             userService.loadUserByUsername(dto.getUsername());
         });
         assertNotNull(userService.delete(dto.getId()));
@@ -52,38 +52,33 @@ public class CustomUserServiceImplTest {
     }
 
     @Test
-    void deleteUserIfNotExists()
-    {
+    void deleteUserIfNotExists() {
         assertFalse(userService.delete(anyString()));
     }
 
     @Test
-    void  updateUserIfNotExists()
-    {
+    void updateUserIfNotExists() {
         assertFalse(userService.update(anyString(), mockUser));
     }
 
     @Test
-    void getUserIfNotExists()
-    {
-        Optional<CustomUserDTO> optional=userService.getUser(anyString());
+    void getUserIfNotExists() {
+        Optional<CustomUserDTO> optional = userService.getUser(anyString());
 
         assertFalse(optional.isPresent());
     }
+
     @Test
-    void getAllCustomUserTest()
-    {
+    void getAllCustomUserTest() {
         assertNotNull(userService.getAll());
     }
+
     @Test
-    void getUserByUsernameIfUserNotExists()
-    {
-        assertThrows(UsernameNotFoundException.class,()->{
-           userService.loadUserByUsername(anyString());
+    void getUserByUsernameIfUserNotExists() {
+        assertThrows(UsernameNotFoundException.class, () -> {
+            userService.loadUserByUsername(anyString());
         });
     }
-
-
 
 
 }

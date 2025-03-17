@@ -3,6 +3,7 @@ package com.zestindia.t2.service.impl;
 import com.zestindia.t2.dto.CustomUserDTO;
 import com.zestindia.t2.dto.convertor.DTOConvertor;
 import com.zestindia.t2.entity.CustomUser;
+import com.zestindia.t2.exception.custom.UserAlreadyExistsException;
 import com.zestindia.t2.repository.CustomUserRepository;
 import com.zestindia.t2.service.CustomUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +75,9 @@ public class CustomUserServiceImpl implements CustomUserService, UserDetailsServ
     private CustomUser save(CustomUser customUser) {
         customUser.setId(UUID.randomUUID().toString());
         customUser.setPassword(passwordEncoder.encode(customUser.getPassword()));
+        if(userRepository.findByUsername(customUser.getUsername()).isPresent())
+            throw  new UserAlreadyExistsException("User Already Exists With Given Username: "+ customUser.getUsername());
+
         return userRepository.save(customUser);
     }
 

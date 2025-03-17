@@ -1,0 +1,95 @@
+
+  {
+    "name": "Wireless Noise Cancelling Headphones",
+    "description": "Over-ear headphones with active noise cancellation and Bluetooth connectivity",
+    "price": 12000,
+    "category": [
+      {
+        "name": "Electronics"
+      },
+      {
+        "name": "Audio Devices"
+      },
+      {
+        "name": "Headphones & Earbuds"
+      }
+    ],
+    "quantity": 6,
+    "brand": "Sony"
+  },
+  {
+    "name": "Smartwatch with Fitness Tracker",
+    "description": "Feature-rich smartwatch with heart rate monitor, GPS, and sleep tracking",
+    "price": 5000,
+    "category": [
+      {
+        "name": "Electronics"
+      },
+      {
+        "name": "Wearable Tech"
+      },
+      {
+        "name": "Smartwatches"
+      }
+    ],
+    "quantity": 12,
+    "brand": "Amazfit"
+  },
+  {
+    "name": "Gaming Laptop 15.6-inch",
+    "description": "Powerful gaming laptop with high-refresh-rate display and dedicated GPU",
+    "price": 56000,
+    "category": [
+      {
+        "name": "Electronics"
+      },
+      {
+        "name": "Computers & Laptops"
+      },
+      {
+        "name": "Gaming Gear"
+      }
+    ],
+    "quantity": 4,
+    "brand": "Asus"
+  },
+  {
+    "name": "4K Ultra HD Smart TV 55-inch",
+    "description": "55-inch Smart TV with 4K resolution, HDR, and voice assistant support",
+    "price": 42000,
+    "category": [
+      {
+        "name": "Electronics"
+      },
+      {
+        "name": "Home Entertainment"
+      },
+      {
+        "name": "Televisions"
+      }
+    ],
+    "quantity": 7,
+    "brand": "Samsung"
+  }
+  ,
+
+  {
+  "name": "Men's Cotton T-Shirt",
+  "description": "Comfortable and breathable cotton t-shirt with a classic fit",
+  "price": 799.0,
+  "category": [
+  {
+  "name": "Clothing"
+  },
+  {
+  "name": "Men's Wear"
+  },
+  {
+  "name": "Casual Wear"
+  }
+  ],
+  "quantity": 10,
+  "brand": "Nike"
+  }
+
+

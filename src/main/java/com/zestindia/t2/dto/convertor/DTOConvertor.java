@@ -10,6 +10,7 @@ public class DTOConvertor {
                 .username(entity.getUsername())
                 .password(entity.getPassword())
                 .roles(entity.getRoles())
+               .orders(entity.getOrders())
                 .build();
     }
 
@@ -20,6 +21,7 @@ public class DTOConvertor {
                 .username(dto.getUsername())
                 .password(dto.getPassword())
                 .roles(dto.getRoles())
+                .orders(dto.getOrders())
                 .build();
     }
 }

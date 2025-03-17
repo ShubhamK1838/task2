@@ -9,14 +9,14 @@ public interface OrderService {
 
     Order saveOrder(Order order);
 
-    boolean updateOrder(Order order);
+    void  updateOrder(Order order);
 
-    boolean deleteOrder(Order order);
+    void  deleteOrder(String  order);
 
     Optional<Order> getOrder(String id);
+    
+    List<Order> getAllOrder();
 
-    Optional<Order> getOrdersByUserId(String id);
-
-    List<Order> getAllOrder(String id);
+    List<Order> getOrderByUserId(String id );
     
 }

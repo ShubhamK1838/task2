@@ -8,9 +8,9 @@ public interface ProductService {
 
     Product saveProduct(Product product);
 
-    Boolean updateProduct(Product product);
+    void  updateProduct(Product product);
 
-    Boolean deleteProduct(String id);
+    void  deleteProduct(String id);
 
     Optional<Product> getProduct(String id );
 
