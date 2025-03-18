@@ -15,6 +15,10 @@ The primary objectives of this project are:
 - Provide robust CRUD (Create, Read, Update, Delete) operations for key functionalities.
 
 ---
+### Class Diagram
+![Alt ER Diagram](ER.png)
+---
+
 
 ## 3. Functional Features
 
@@ -380,3 +384,5 @@ place.
 
 - **Required Field**:
   - `id`: category ID to be retrieved
+
+
