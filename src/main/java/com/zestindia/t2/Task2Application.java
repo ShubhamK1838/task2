@@ -16,9 +16,12 @@ public class Task2Application {
 
     @GetMapping("/helthz")
     public String ok() {
+
         return "OK";
     }
 
 
 
 }
+
+

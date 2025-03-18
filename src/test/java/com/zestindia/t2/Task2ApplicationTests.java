@@ -13,16 +13,14 @@ class Task2ApplicationTests {
     Random random;
 
     @BeforeEach
-    void initRandom()
-    {
-        random=new Random();
-    }
-    @Test
-    void init()
-    {
-        Assertions.assertNotNull(random);
+    void initRandom() {
+        random = new Random();
     }
 
+    @Test
+    void init() {
+        Assertions.assertNotNull(random);
+    }
 
 
 }

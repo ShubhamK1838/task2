@@ -53,14 +53,14 @@ public class ProductServiceTest {
         doNothing().when(repository).delete(any(Product.class));
         productService.deleteProduct(anyString());
 
-        verify(repository,times(1)).delete(any(Product.class));
+        verify(repository, times(1)).delete(any(Product.class));
 
     }
 
     @Test
     void productDeleteIfProductNOtExistsTest() {
         when(repository.findById(anyString())).thenReturn(Optional.ofNullable(null));
-         assertThrows(ProductNotFoundException.class,()->{
+        assertThrows(ProductNotFoundException.class, () -> {
             productService.deleteProduct("ID");
         });
     }
@@ -89,7 +89,7 @@ public class ProductServiceTest {
         when(repository.findById("ID")).thenReturn(Optional.ofNullable(null));
 
 
-        assertThrows(ProductNotFoundException.class,()->{
+        assertThrows(ProductNotFoundException.class, () -> {
             productService.updateProduct(Product.builder().id("ID").build());
         });
     }
@@ -112,7 +112,7 @@ public class ProductServiceTest {
         productService.updateProduct(updatedProduct);
 
         assertEquals(existingProduct.getName(), updatedProduct.getName());
- }
+    }
 
 
 }
