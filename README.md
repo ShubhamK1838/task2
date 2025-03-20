@@ -15,6 +15,11 @@ The primary objectives of this project are:
 - Provide robust CRUD (Create, Read, Update, Delete) operations for key functionalities.
 
 ---
+### Class Diagram
+![Alt ER Diagram](ER.png)
+
+---
+
 
 ## 3. Functional Features
 
@@ -63,7 +68,7 @@ The primary objectives of this project are:
 - **Authentication:** Use Spring Security for user authentication via username/password or token-based methods.
 - **Role-Based Access Control (RBAC):** Restrict access to certain actions (e.g., creating products) to users with
   the ADMIN role only.
-
+---
 # User Management API Documentation
 
 This document describes the RESTful APIs provided by the User Module of the e-commerce application.
@@ -181,13 +186,15 @@ place.
 - **Description**: This endpoint performs security checks before retrieving sensitive data. The actual sensitive
   information may need to be excluded from the response.
 
+
+---
 # Product Management API's
 
 ## Features
 
 1. **Product Registration**:
 
-- Create new user product with required fields: name, description, brand, category, price, available quantity
+- Create new product with required fields: name, description, brand, category, price, available quantity
 
 2. **Product Deletion**:
 
@@ -195,7 +202,7 @@ place.
 
 3. **Product Update**:
 
-- Update user information including all relevant fields  (admin-only access)
+- Update product information including all relevant fields  (admin-only access)
 
 4. **Retrieve All Products**:
 
@@ -223,7 +230,7 @@ Description: Deletes an individual Product based on their ID.
 
 Endpoint: `/products`
 Method: PUT
-Description: Updates specific fields of a product's record, including username, password, roles, etc.
+Description: Updates specific fields of a product's .
 
 ### Retrieve All Product
 
@@ -302,6 +309,7 @@ place.
   
 
 
+---
 
 # Order Management API's
 
@@ -380,3 +388,5 @@ place.
 
 - **Required Field**:
   - `id`: category ID to be retrieved
+---
+

@@ -5,6 +5,7 @@ import com.zestindia.t2.entity.Order;
 import com.zestindia.t2.enums.Roles;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @ToString
@@ -19,7 +20,8 @@ public class CustomUserDTO {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Roles roles[] = new Roles[]{Roles.USER};
+    private String roles = "USER";
+
     private List<Order> orders;
 
 }

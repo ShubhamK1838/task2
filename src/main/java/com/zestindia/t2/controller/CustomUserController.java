@@ -6,9 +6,11 @@ import com.zestindia.t2.service.CustomUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @RestController
@@ -36,10 +38,15 @@ public class CustomUserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUserDetails(@PathVariable String id) {
-        return userService.delete(id)
-                ? ResponseEntity.ok().build()
-                : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    public ResponseEntity<?> deleteUserDetails(@PathVariable String id, Principal principal) {
+        CustomUserDTO customUserDTO = userService.getUser(id).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        boolean rst = principal.getName().equals(customUserDTO.getUsername());
+
+        if (rst || customUserDTO.getRoles().contains("ADMIN"))
+            return userService.delete(id)
+                    ? ResponseEntity.ok().build()
+                    : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        throw new RuntimeException("Invalid Credential ");
     }
 
     @PutMapping("/{id}")
@@ -51,7 +58,7 @@ public class CustomUserController {
     public ResponseEntity<?> getUserById(@PathVariable String id) {
         Optional<CustomUserDTO> optionalCustomUser = userService.getUser(id);
 
-        return ResponseEntity.status(HttpStatus.OK).body(optionalCustomUser.orElseThrow(()->new UsernameNotFoundException("User Not Found")));
+        return ResponseEntity.status(HttpStatus.OK).body(optionalCustomUser.orElseThrow(() -> new UsernameNotFoundException("User Not Found")));
 
     }
 

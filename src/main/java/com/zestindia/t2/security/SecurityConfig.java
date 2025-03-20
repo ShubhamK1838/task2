@@ -21,6 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
 
+
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -33,10 +34,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(csrf -> csrf.disable());
         httpSecurity.authorizeHttpRequests(auth -> {
-            auth.requestMatchers("/public/**", "/user/register", "/login").permitAll();
-
-
-            auth.anyRequest().authenticated();
+            auth.requestMatchers("/public/**", "/users/register","/h2-console","/h2-console/**", "/login").permitAll();
+            auth.anyRequest().permitAll();
         });
 
 

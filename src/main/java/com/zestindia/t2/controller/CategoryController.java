@@ -20,12 +20,14 @@ public class CategoryController {
     }
 
     @PostMapping
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<?> saveCategory(@RequestBody Category category) {
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.save(category));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @Secured("ROLE_ADMIN")
     public void deleteCategoryDetails(@PathVariable String id) {
         categoryService.delete(id);
     }
@@ -44,7 +46,7 @@ public class CategoryController {
         return ResponseEntity.ok().body(categoryService.getAll());
     }
 
-    @PutMapping
+    @PutMapping @Secured("ROLE_ADMIN")
     public void updateCategory(@RequestBody Category category) {
         categoryService.update(category);
     }

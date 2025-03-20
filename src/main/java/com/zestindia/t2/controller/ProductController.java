@@ -2,6 +2,7 @@ package com.zestindia.t2.controller;
 
 import com.zestindia.t2.entity.Product;
 import com.zestindia.t2.service.ProductService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
+@Slf4j
 public class ProductController {
 
 
@@ -25,6 +27,7 @@ public class ProductController {
     @PostMapping
     @Secured("ROLE_ADMIN")
     public ResponseEntity<?> saveProduct(@RequestBody Product product) {
+
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.saveProduct(product));
     }
 

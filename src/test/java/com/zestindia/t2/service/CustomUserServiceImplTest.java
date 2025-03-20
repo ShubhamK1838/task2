@@ -31,7 +31,7 @@ public class CustomUserServiceImplTest {
                 .username("Tushar")
                 .id(UUID.randomUUID().toString())
                 .password("tushar'spass")
-                .roles(new Roles[]{Roles.USER})
+                .roles("USER,ADMIN")
                 .build();
     }
 
@@ -39,7 +39,7 @@ public class CustomUserServiceImplTest {
     void save_Update_Delete_Get_User_IfExists_Test() {
 
         var dto = userService.saveUser(mockUser);
-        dto.setRoles(new Roles[]{Roles.ADMIN});
+        dto.setRoles("USER,ADMIN");
 
         assertNotNull(dto);
         assertNotNull(userService.getUser(dto.getId()));

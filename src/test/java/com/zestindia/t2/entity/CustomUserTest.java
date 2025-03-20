@@ -15,7 +15,6 @@ public class CustomUserTest {
     void getAuthoritiesTest()
     {
         var user=CustomUser.builder()
-                .roles(new Roles[]{Roles.USER})
                 .build();
         assertNotNull(user.getAuthorities());
 

@@ -4,6 +4,7 @@ package com.zestindia.t2.service.impl;
 import com.zestindia.t2.dto.convertor.ProductMapper;
 import com.zestindia.t2.entity.Order;
 import com.zestindia.t2.entity.OrderedProduct;
+import com.zestindia.t2.entity.Product;
 import com.zestindia.t2.exception.custom.OrderNotFoundException;
 import com.zestindia.t2.exception.custom.ProductNotFoundException;
 import com.zestindia.t2.repository.OrderRepository;
@@ -81,14 +82,15 @@ public class OrderServiceImpl implements OrderService {
         List<OrderedProduct> productList = order.getProducts().stream()
                 .map((ele) -> {
                     if (ele.getQuantity() <= 0) throw new RuntimeException("Invalid Number of Orders");
-                    var entity = productService.getProduct(ele.getId()).orElseThrow(() -> new ProductNotFoundException("The Product Not Available with given Id :" + ele.getId()));
+                    Product entity = productService.getProduct(ele.getProductId()).orElseThrow(() -> new ProductNotFoundException("The Product Not Available with given Id :" + ele.getId()));
                     if (entity.getQuantity() - ele.getQuantity() < 0)
                         throw new ProductNotFoundException("Product Not Available");
                     order.setTotalPrice(order.getTotalPrice() + (ele.getQuantity() * entity.getPrice()));
                     order.setQuantity((short) (order.getQuantity() + ele.getQuantity()));
                     entity.setQuantity(entity.getQuantity() - ele.getQuantity());
-                    OrderedProduct orderedProduct = ProductMapper.toOrderdProduct(entity);
+                    OrderedProduct orderedProduct = ProductMapper.toOrderedProduct(entity);
                     orderedProduct.setQuantity(ele.getQuantity());
+                    orderedProduct.setId(UUID.randomUUID().toString());
                     return orderedProduct;
                 }).collect(Collectors.toList());
 

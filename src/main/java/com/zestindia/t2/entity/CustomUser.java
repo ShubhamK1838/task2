@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Getter
 @Setter
+@Table(name = "custom_user")
 public class CustomUser implements UserDetails {
 
     @Id
@@ -30,17 +31,18 @@ public class CustomUser implements UserDetails {
     private String username;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-    @Enumerated(EnumType.STRING)
-    private Roles roles[];
-    @OneToMany(fetch = FetchType.EAGER , mappedBy = "user")
+//    @Enumerated(EnumType.STRING)
+    private String roles;
+    @OneToMany(fetch = FetchType.EAGER , mappedBy = "user", orphanRemoval = true)
     @JsonManagedReference
     private List<Order> orders;
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.stream(roles)
-                .map(ele -> new SimpleGrantedAuthority("ROLE_"+ele.name()))
+        String ar[]=roles.split(",");
+        return Arrays.stream(ar)
+                .map(ele -> new SimpleGrantedAuthority("ROLE_"+ele))
                 .collect(Collectors.toList());
     }
 
