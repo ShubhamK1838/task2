@@ -10,16 +10,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class CategoryControllerTest {
 
     @Autowired
@@ -66,6 +70,29 @@ public class CategoryControllerTest {
 
         Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         System.out.println("Delete Category Status code : "+responseEntity.getStatusCode());
+    }
+
+    @Test
+    void getCategoryById(){
+        ResponseEntity<Category> responseEntity=restClient
+                .get()
+                .uri(BASE_URL+"/1")
+                .retrieve()
+                .toEntity(Category.class);
+        Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        System.out.println("Get Category Body : "+responseEntity.getBody());
+    }
+
+    @Test
+    void getAllCategories(){
+
+        ResponseEntity<List<Category>> responseEntity=restClient
+                .get()
+                .uri(BASE_URL)
+                .retrieve()
+                .toEntity(new ParameterizedTypeReference<>() { });
+        Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        System.out.println("Get All Category Body : "+responseEntity.getBody());
     }
 
 

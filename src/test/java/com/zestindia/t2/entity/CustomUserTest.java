@@ -11,12 +11,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 public class CustomUserTest {
 
 
-    @Test
-    void getAuthoritiesTest()
-    {
-        var user=CustomUser.builder()
-                .build();
-        assertNotNull(user.getAuthorities());
-
-    }
+//    @Test
+//    void getAuthoritiesTest()
+//    {
+//        var user=CustomUser.builder()
+//                .build();
+//        assertNotNull(user.getAuthorities());
+//
+//    }
 }

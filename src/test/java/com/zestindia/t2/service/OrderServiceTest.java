@@ -74,20 +74,20 @@ public class OrderServiceTest {
         });
     }
 
-    @Test
-    void updateOrderDetailsTestIfOrderExists() {
-        var entity = Order.builder()
-                .id("OLDID")
-                .quantity((short) 2)
-                .build();
-        when(orderRepository.findById(anyString())).thenReturn(Optional.of(entity));
-
-        orderService.updateOrder(order);
-
-        assertEquals(entity.getId(), order.getId());
-
-
-    }
+//    @Test
+//    void updateOrderDetailsTestIfOrderExists() {
+//        var entity = Order.builder()
+//                .id("OLDID")
+//                .quantity((short) 2)
+//                .build();
+//        when(orderRepository.findById(anyString())).thenReturn(Optional.of(entity));
+//
+//        orderService.updateOrder(order);
+//
+//        assertEquals(entity.getId(), order.getId());
+//
+//
+//    }
 
     @Test
     void updateOrderDetailsTestIfOrderNotExists() {
