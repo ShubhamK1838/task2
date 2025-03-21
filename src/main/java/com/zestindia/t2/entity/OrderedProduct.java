@@ -23,6 +23,7 @@ public class OrderedProduct {
 
         @Id
         private String id;
+        private String productId ;
         @NotNull
         private String name, description;
         @NotNull
