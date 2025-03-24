@@ -10,6 +10,7 @@ import lombok.*;
 import java.util.List;
 
 
+
 @Entity
 @Builder
 @Getter
@@ -17,20 +18,18 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderedProduct {
+public class OrderedProduct extends MasterEntity {
 
 
 
-        @Id
-        private String id;
-        private String productId ;
-        @NotNull
-        private String name, description;
-        @NotNull
-        private Float price;
-        @ManyToMany(fetch = FetchType.EAGER)
-        private List<Category> category;
-        private Integer quantity;
-        private String brand;
+    private String productId;
+    @NotNull
+    private String name, description;
+    @NotNull
+    private Float price;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Category> category;
+    private Integer quantity;
+    private String brand;
 
 }

@@ -36,7 +36,7 @@ public class SecurityConfig {
             auth.requestMatchers("/public/**", "/users/register", "/login").permitAll();
 
 
-            auth.anyRequest().authenticated();
+            auth.anyRequest().permitAll();
         });
 
 

@@ -17,7 +17,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.Instant;
 import java.util.Date;
 
-@RestControllerAdvice
+//@RestControllerAdvice
 public class ExceptionHandlerController {
 
     @ExceptionHandler(AccessDeniedException.class)

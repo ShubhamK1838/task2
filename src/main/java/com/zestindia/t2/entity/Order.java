@@ -16,9 +16,8 @@ import java.util.Date;
 @Getter
 @Setter
 @Table(name = "orders")
-public class Order {
-    @Id
-    private String id;
+public class Order extends MasterEntity {
+
     @NotNull
     private short quantity;
     @Temporal(TemporalType.DATE)

@@ -81,7 +81,7 @@ public class OrderServiceImpl implements OrderService {
         List<OrderedProduct> productList = order.getProducts().stream()
                 .map((ele) -> {
                     if (ele.getQuantity() <= 0) throw new RuntimeException("Invalid Number of Orders");
-                    var entity = productService.getProduct(ele.getProductId()).orElseThrow(() -> new ProductNotFoundException("The Product Not Available with given Id :" + ele.getId()));
+                    var entity = productService.get(ele.getProductId()).orElseThrow(() -> new ProductNotFoundException("The Product Not Available with given Id :" + ele.getId()));
                     if (entity.getQuantity() - ele.getQuantity() < 0)
                         throw new ProductNotFoundException("Product Not Available");
                     order.setTotalPrice(order.getTotalPrice() + (ele.getQuantity() * entity.getPrice()));
