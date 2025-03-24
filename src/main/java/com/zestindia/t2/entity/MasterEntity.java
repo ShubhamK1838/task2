@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @MappedSuperclass
 @Data
-public abstract  class MasterEntity {
+public abstract class MasterEntity {
 
     @Id
     private String id;
