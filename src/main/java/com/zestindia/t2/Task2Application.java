@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class Task2Application {
 
     public static void main(String[] args) {
+
         SpringApplication.run(Task2Application.class, args);
     }
 
@@ -19,7 +20,6 @@ public class Task2Application {
 
         return "OK";
     }
-
 
 
 }

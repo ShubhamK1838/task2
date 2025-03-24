@@ -29,14 +29,14 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void update(Category category) {
-        Category entity = getCategory(category.getId()).orElseThrow(()->new CategoryNotFoundException("Category not found with ID: " + category.getId()));
+        Category entity = getCategory(category.getId()).orElseThrow(() -> new CategoryNotFoundException("Category not found with ID: " + category.getId()));
         entity.setName(category.getName() != null ? category.getName() : category.getName());
         categoryRepository.save(entity);
     }
 
     @Override
     public void delete(String id) {
-        categoryRepository.delete(getCategory(id).orElseThrow(()->new CategoryNotFoundException("Category not found with ID: " + id)));
+        categoryRepository.delete(getCategory(id).orElseThrow(() -> new CategoryNotFoundException("Category not found with ID: " + id)));
     }
 
     @Override
@@ -56,10 +56,14 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category putCategoryByName(String name) {
-        Optional<Category> optional=getByName(name);
-        if(optional.isPresent())
+        Optional<Category> optional = getByName(name);
+        if (optional.isPresent())
             return optional.get();
-        else
-            return categoryRepository.save(Category.builder().id(UUID.randomUUID().toString()).name(name).build());
+        else {
+            var category = Category.builder().name(name).build();
+            category.setId(UUID.randomUUID().toString());
+            categoryRepository.save(category);
+            return categoryRepository.save(category);
+        }
     }
 }

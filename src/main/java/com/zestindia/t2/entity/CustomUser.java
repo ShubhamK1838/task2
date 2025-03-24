@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
+
+
 @Entity
 @Builder
 @ToString
@@ -22,10 +24,9 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CustomUser implements UserDetails {
+public class CustomUser extends MasterEntity implements UserDetails {
 
-    @Id
-    private String id;
+
     @Column(unique = true)
     private String username;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
