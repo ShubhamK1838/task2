@@ -34,6 +34,7 @@ public class CategoryController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void getCategory(@PathVariable String id) {
+//         unwanted code
         categoryService.getCategory(id).orElseThrow(CategoryNotFoundException::new);
     }
 
@@ -43,7 +44,7 @@ public class CategoryController {
     public ResponseEntity<?> getAllCategory() {
         return ResponseEntity.ok().body(categoryService.getAll());
     }
-
+// abc added
     @PutMapping
     public void updateCategory(@RequestBody Category category) {
         categoryService.update(category);
