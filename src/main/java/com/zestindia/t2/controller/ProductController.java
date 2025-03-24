@@ -25,12 +25,12 @@ public class ProductController {
     @PostMapping
     @Secured("ROLE_ADMIN")
     public ResponseEntity<?> saveProduct(@RequestBody Product product) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(productService.saveProduct(product));
+        return ResponseEntity.status(HttpStatus.CREATED).body(productService.save(product));
     }
 
     @GetMapping("/{productId}")
     public ResponseEntity<?> getProductById(@PathVariable String productId) {
-        Optional<Product> productOptional = productService.getProduct(productId);
+        Optional<Product> productOptional = productService.get(productId);
         return
                 productOptional.isPresent() ?
                         ResponseEntity.ok().body(productOptional.get())
@@ -39,7 +39,7 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<?> getAllProducts() {
-        List<Product> list = productService.getAllProducts();
+        List<Product> list = productService.getAll();
         return list.size() > 0
                 ? ResponseEntity.ok().body(list)
                 : ResponseEntity.status(HttpStatus.NOT_FOUND).body("No products Available.");
@@ -49,13 +49,13 @@ public class ProductController {
     @ResponseStatus(HttpStatus.OK)
     @Secured("ROLE_ADMIN")
     public void updateProductDetails(@RequestBody Product product) {
-        productService.updateProduct(product);
+        productService.update(product.getId(), product);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Secured("ROLE_ADMIN")
     public void deleteProductDetails(@PathVariable String id) {
-        productService.deleteProduct(id);
+        productService.removeById(id);
     }
 }

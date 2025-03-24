@@ -1,10 +1,14 @@
 package com.zestindia.t2.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.List;
+
+
 
 @Entity
 @Builder
@@ -13,10 +17,8 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product {
+public class Product extends MasterEntity {
 
-    @Id
-    private String id;
     @NotNull
     private String name, description;
     @NotNull
